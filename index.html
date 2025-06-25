@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Em Có Yêu Anh Không? 💖</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: linear-gradient(to bottom, #ffe6f0, #ffccee);
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      overflow: hidden;
+    }
+    h1 {
+      color: #d63384;
+      font-size: 2.2rem;
+      margin: 30px 20px 10px;
+    }
+    .image {
+      width: 180px;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    #btnContainer {
+      position: relative;
+      width: 320px;
+      height: 120px;
+      margin: 30px auto;
+    }
+    .btn {
+      position: absolute;
+      padding: 12px 24px;
+      font-size: 18px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+    #yesBtn {
+      background-color: #ff4da6;
+      color: white;
+      left: 40px;
+      top: 40px;
+    }
+    #yesBtn:hover {
+      background-color: #e60073;
+    }
+    #noBtn {
+      background-color: white;
+      color: #ff4da6;
+      border: 2px solid #ff4da6;
+      left: 180px;
+      top: 40px;
+    }
+    #noBtn:hover {
+      background-color: #ffe6f0;
+    }
+    #message {
+      font-size: 1.8rem;
+      color: #d63384;
+      margin-top: 40px;
+      opacity: 0;
+      transition: opacity 1s ease-in;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: pink;
+      transform: rotate(45deg);
+      animation: fall 4s linear forwards;
+      top: -20px;
+      z-index: 2;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: pink;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(45deg);
+        opacity: 0;
+      }
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+      #btnContainer {
+        width: 260px;
+        height: 100px;
+      }
+      .btn {
+        font-size: 16px;
+        padding: 10px 20px;
+      }
+      .image {
+        width: 140px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Em có yêu anh không? 💖</h1>
+  <img
+    src="https://cdn.pixabay.com/photo/2021/04/17/15/10/bear-6186451_1280.png"
+    alt="cute bear"
+    class="image"
+  />
+
+  <div id="btnContainer">
+    <button class="btn" id="yesBtn">Có 🥰</button>
+    <button class="btn" id="noBtn">Không 😅</button>
+  </div>
+
+  <div id="message">Anh cũng yêu em nhiều lắm 💞</div>
+
+  <audio autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/10/27/audio_bf9f1b2b83.mp3?filename=love-you-126505.mp3" type="audio/mpeg" />
+  </audio>
+
+  <canvas id="fireworks"></canvas>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const container = document.getElementById("btnContainer");
+
+    document.addEventListener("mousemove", (e) => {
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+      const btnRect = noBtn.getBoundingClientRect();
+      const btnCenterX = btnRect.left + btnRect.width / 2;
+      const btnCenterY = btnRect.top + btnRect.height / 2;
+
+      const dx = mouseX - btnCenterX;
+      const dy = mouseY - btnCenterY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      const threshold = 100;
+
+      if (distance < threshold) {
+        const moveX = -dx / distance * 100;
+        const moveY = -dy / distance * 70;
+
+        let newLeft = noBtn.offsetLeft + moveX;
+        let newTop = noBtn.offsetTop + moveY;
+
+        const maxLeft = container.clientWidth - noBtn.offsetWidth;
+        const maxTop = container.clientHeight - noBtn.offsetHeight;
+
+        newLeft = Math.max(0, Math.min(maxLeft, newLeft));
+        newTop = Math.max(0, Math.min(maxTop, newTop));
+
+        noBtn.style.left = `${newLeft}px`;
+        noBtn.style.top = `${newTop}px`;
+      }
+    });
+
+    yesBtn.onclick = () => {
+      yesBtn.style.display = "none";
+      noBtn.style.display = "none";
+      document.getElementById("message").style.opacity = 1;
+
+      for (let i = 0; i < 50; i++) {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.animationDelay = Math.random() * 2 + "s";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 5000);
+      }
+
+      startFireworks();
+    };
+
+    // Fireworks (canvas)
+    const canvas = document.getElementById("fireworks");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const particles = [];
+
+    function createFirework(x, y) {
+      for (let i = 0; i < 30; i++) {
+        particles.push({
+          x, y,
+          radius: 2 + Math.random() * 2,
+          color: `hsl(${Math.random() * 360}, 100%, 60%)`,
+          angle: Math.random() * 2 * Math.PI,
+          speed: Math.random() * 4 + 2,
+          alpha: 1
+        });
+      }
+    }
+
+    function updateFireworks() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, i) => {
+        p.x += Math.cos(p.angle) * p.speed;
+        p.y += Math.sin(p.angle) * p.speed;
+        p.alpha -= 0.02;
+        if (p.alpha <= 0) particles.splice(i, 1);
+      });
+
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.globalAlpha = p.alpha;
+        ctx.fillStyle = p.color;
+        ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
+        ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(updateFireworks);
+    }
+
+    function startFireworks() {
+      setInterval(() => {
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height / 2;
+        createFirework(x, y);
+      }, 500);
+      updateFireworks();
+    }
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
