@@ -3,268 +3,186 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Em Có Yêu Anh Không? 💖</title>
+  <title>Tỏ tình</title>
   <style>
     * {
       box-sizing: border-box;
-    }
-    body {
       margin: 0;
-      background: linear-gradient(to bottom, #ffe6f0, #ffccee);
-      font-family: 'Segoe UI', sans-serif;
-      text-align: center;
+      padding: 0;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
       overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 1rem;
+      text-align: center;
     }
     h1 {
-      color: #d63384;
-      font-size: 2.2rem;
-      margin: 30px 20px 10px;
+      color: #fff;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 5px #00000040;
     }
     .image {
-      width: 180px;
-      animation: float 3s ease-in-out infinite;
+      width: 40vw;
+      max-width: 200px;
+      min-width: 120px;
+      margin-bottom: 1.5rem;
     }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    #btnContainer {
+    .buttons {
       position: relative;
-      width: 320px;
-      height: 120px;
-      margin: 30px auto;
+      width: 300px;
+      max-width: 90vw;
+      height: 200px;
+      margin-top: 20px;
     }
-    .btn {
-      position: absolute;
+    button {
       padding: 12px 24px;
-      font-size: 18px;
+      font-size: 1.1rem;
       border: none;
-      border-radius: 25px;
+      border-radius: 30px;
       cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      user-select: none;
     }
     #yesBtn {
-      background-color: #ff4da6;
+      background-color: #ff6f91;
       color: white;
-      left: 40px;
-      top: 40px;
-    }
-    #yesBtn:hover {
-      background-color: #e60073;
-    }
-    #noBtn {
-      background-color: white;
-      color: #ff4da6;
-      border: 2px solid #ff4da6;
-      left: 180px;
-      top: 40px;
-    }
-    #noBtn:hover {
-      background-color: #ffe6f0;
-    }
-    #message {
-      font-size: 1.8rem;
-      color: #d63384;
-      margin-top: 40px;
-      opacity: 0;
-      transition: opacity 1s ease-in;
-    }
-
-    .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background-color: pink;
-      transform: rotate(45deg);
-      animation: fall 4s linear forwards;
-      top: -20px;
       z-index: 2;
     }
-
-    .heart::before,
-    .heart::after {
-      content: "";
+    #yesBtn:hover {
+      background-color: #ff3e70;
+      transform: scale(1.1);
+    }
+    #noBtn {
+      background-color: #eeeeee;
+      color: #444;
       position: absolute;
-      width: 20px;
-      height: 20px;
-      background-color: pink;
-      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
     }
-
-    .heart::before {
-      top: -10px;
-      left: 0;
-    }
-
-    .heart::after {
-      left: -10px;
-      top: 0;
-    }
-
-    @keyframes fall {
-      0% {
-        transform: translateY(0) rotate(45deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh) rotate(45deg);
-        opacity: 0;
-      }
-    }
-
-    canvas {
-      position: fixed;
+    .heart-container {
+      position: absolute;
       top: 0;
       left: 0;
       pointer-events: none;
-      z-index: 1;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
     }
-
-    @media (max-width: 480px) {
+    .heart {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/5/57/Heart_symbol_red.svg') no-repeat center/contain;
+      animation: float 2s ease-out forwards;
+    }
+    @keyframes float {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-150px) scale(1.5);
+      }
+    }
+    @media (max-width: 500px) {
       h1 {
         font-size: 1.5rem;
       }
-      #btnContainer {
-        width: 260px;
-        height: 100px;
-      }
-      .btn {
-        font-size: 16px;
+      button {
+        font-size: 1rem;
         padding: 10px 20px;
       }
-      .image {
-        width: 140px;
+      .buttons {
+        height: 180px;
       }
     }
   </style>
 </head>
 <body>
   <h1>Em có yêu anh không? 💖</h1>
-  <img
-    src="https://cdn.pixabay.com/photo/2021/04/17/15/10/bear-6186451_1280.png"
-    alt="cute bear"
-    class="image"
-  />
-
-  <div id="btnContainer">
-    <button class="btn" id="yesBtn">Có 🥰</button>
-    <button class="btn" id="noBtn">Không 😅</button>
+  <img class="image" src="https://cdn.pixabay.com/photo/2017/01/31/17/02/heart-2024581_1280.png" alt="cute" />
+  <div class="buttons">
+    <button id="yesBtn">Có 🥰</button>
+    <button id="noBtn">Không 😝</button>
   </div>
-
-  <div id="message">Anh cũng yêu em nhiều lắm 💞</div>
-
-  <audio autoplay loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/10/27/audio_bf9f1b2b83.mp3?filename=love-you-126505.mp3" type="audio/mpeg" />
-  </audio>
-
-  <canvas id="fireworks"></canvas>
+  <div class="heart-container" id="heartContainer"></div>
 
   <script>
-    const noBtn = document.getElementById("noBtn");
-    const yesBtn = document.getElementById("yesBtn");
-    const container = document.getElementById("btnContainer");
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const heartContainer = document.getElementById('heartContainer');
+    const buttonsContainer = document.querySelector('.buttons');
 
-    document.addEventListener("mousemove", (e) => {
-      const mouseX = e.clientX;
-      const mouseY = e.clientY;
+    const btnBox = buttonsContainer.getBoundingClientRect();
+    const btnArea = {
+      left: 0,
+      right: btnBox.width,
+      top: 0,
+      bottom: btnBox.height
+    };
+
+    // Khởi tạo vị trí giữa cho "Không"
+    noBtn.style.left = '50%';
+    noBtn.style.top = '50%';
+
+    function moveButtonAway(event) {
+      const pointerX = event.clientX || (event.touches && event.touches[0].clientX);
+      const pointerY = event.clientY || (event.touches && event.touches[0].clientY);
+
       const btnRect = noBtn.getBoundingClientRect();
-      const btnCenterX = btnRect.left + btnRect.width / 2;
-      const btnCenterY = btnRect.top + btnRect.height / 2;
+      const centerX = btnRect.left + btnRect.width / 2;
+      const centerY = btnRect.top + btnRect.height / 2;
 
-      const dx = mouseX - btnCenterX;
-      const dy = mouseY - btnCenterY;
+      const dx = pointerX - centerX;
+      const dy = pointerY - centerY;
       const distance = Math.sqrt(dx * dx + dy * dy);
+
       const threshold = 100;
-
       if (distance < threshold) {
-        const moveX = -dx / distance * 100;
-        const moveY = -dy / distance * 70;
+        const angle = Math.atan2(dy, dx);
+        const moveX = -Math.cos(angle) * 120;
+        const moveY = -Math.sin(angle) * 120;
 
+        // Tính toán vị trí mới
+        const containerRect = buttonsContainer.getBoundingClientRect();
         let newLeft = noBtn.offsetLeft + moveX;
         let newTop = noBtn.offsetTop + moveY;
 
-        const maxLeft = container.clientWidth - noBtn.offsetWidth;
-        const maxTop = container.clientHeight - noBtn.offsetHeight;
-
-        newLeft = Math.max(0, Math.min(maxLeft, newLeft));
-        newTop = Math.max(0, Math.min(maxTop, newTop));
+        // Giới hạn không cho vượt quá vùng buttons
+        newLeft = Math.max(0, Math.min(newLeft, containerRect.width - noBtn.offsetWidth));
+        newTop = Math.max(0, Math.min(newTop, containerRect.height - noBtn.offsetHeight));
 
         noBtn.style.left = `${newLeft}px`;
         noBtn.style.top = `${newTop}px`;
       }
-    });
+    }
 
-    yesBtn.onclick = () => {
-      yesBtn.style.display = "none";
-      noBtn.style.display = "none";
-      document.getElementById("message").style.opacity = 1;
+    document.addEventListener('mousemove', moveButtonAway);
+    document.addEventListener('touchmove', moveButtonAway, { passive: true });
 
-      for (let i = 0; i < 50; i++) {
-        const heart = document.createElement("div");
-        heart.classList.add("heart");
-        heart.style.left = Math.random() * window.innerWidth + "px";
-        heart.style.animationDelay = Math.random() * 2 + "s";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 5000);
-      }
-
-      startFireworks();
-    };
-
-    // Fireworks (canvas)
-    const canvas = document.getElementById("fireworks");
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const particles = [];
-
-    function createFirework(x, y) {
+    yesBtn.addEventListener('click', () => {
+      yesBtn.textContent = 'Anh cũng yêu em! 💘';
       for (let i = 0; i < 30; i++) {
-        particles.push({
-          x, y,
-          radius: 2 + Math.random() * 2,
-          color: `hsl(${Math.random() * 360}, 100%, 60%)`,
-          angle: Math.random() * 2 * Math.PI,
-          speed: Math.random() * 4 + 2,
-          alpha: 1
-        });
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.top = 60 + Math.random() * 20 + '%';
+        heartContainer.appendChild(heart);
+        setTimeout(() => heart.remove(), 2000);
       }
-    }
-
-    function updateFireworks() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((p, i) => {
-        p.x += Math.cos(p.angle) * p.speed;
-        p.y += Math.sin(p.angle) * p.speed;
-        p.alpha -= 0.02;
-        if (p.alpha <= 0) particles.splice(i, 1);
-      });
-
-      particles.forEach(p => {
-        ctx.beginPath();
-        ctx.globalAlpha = p.alpha;
-        ctx.fillStyle = p.color;
-        ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
-        ctx.fill();
-      });
-      ctx.globalAlpha = 1;
-      requestAnimationFrame(updateFireworks);
-    }
-
-    function startFireworks() {
-      setInterval(() => {
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height / 2;
-        createFirework(x, y);
-      }, 500);
-      updateFireworks();
-    }
-
-    window.addEventListener("resize", () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
     });
   </script>
 </body>
